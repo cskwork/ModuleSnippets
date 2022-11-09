@@ -56,6 +56,12 @@
   };
   console.log(replaceAllInString('ab,###asf', '#', ''));
   //========================================================================
+  /*
+  INPUT
+  [{"name":"eggs","price":1},{"name":"coffee","price":9.99},{"name":"rice","price":4.04}]
+  OUTPUT
+  [{"name":"eggs","price":1},{"name":"rice","price":4.04},{"name":"coffee","price":9.99}]
+  */
   const sortJSONStringByPriceAscending = (jsonString) => {
      const parsedJson =  JSON.parse(jsonString);
 
