@@ -26,12 +26,12 @@
   OUTPUT
   2
   */
-  const numberOfItems = (arr, item) => {
+  const numberOfItemsInArray = (arr, itemName ) => {
     console.time('flat');
     let count = 0;
 
     flatDeep(arr, 10).forEach( eachItem =>{
-      if( eachItem === item){
+      if( eachItem === itemName ){
         count++;
       }
     });
