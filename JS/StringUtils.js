@@ -44,3 +44,16 @@
         : arr.slice();
   };
   //========================================================================
+  /*
+  INPUT
+  'ab,###asf'
+  OUTPUT
+  "ab,asf"
+  */
+  const replaceAllInString = (input, asIsChar, toBeChar) => {
+    const regExp = new RegExp(asIsChar, 'g'); // = /a/g;
+    return input.replace(regExp, toBeChar);
+  };
+  console.log(replaceAllInString('ab,###asf', '#', ''));
+  //========================================================================
+
