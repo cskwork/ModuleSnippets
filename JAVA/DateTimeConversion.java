@@ -6,6 +6,7 @@
     2022-11-10
   */
   public static String convertLocalDateTimeToStringFormat(LocalDateTime inputDate , String datePattern){
+    // String formatDateTime = convertLocalDateTimeToStringFormat(now , "yyyy-MM-dd");
       DateTimeFormatter formatter = DateTimeFormatter.ofPattern(datePattern);
       String formatDateTime = inputDate.format(formatter);
       return formatDateTime;
@@ -19,6 +20,7 @@
     After : 1995-07-25T15:03:21
   */
   public static LocalDateTime convertStringFormatToLocalDateTime(String stringDate , String stringPattern){
+    //  LocalDateTime date  = convertStringFormatToLocalDateTime(dateTime , "yyyy-MM-dd HH:mm:ss.SSS");
         boolean isValidStringPattern = (
             stringPattern.equals("yyyy-MM-dd HH:mm") 
             || stringPattern.equals("yyyy-MM-dd HH:mm:ss")
