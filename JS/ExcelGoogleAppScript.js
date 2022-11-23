@@ -15,7 +15,6 @@ function onEdit(e) {
   }
   console.log(debug_e);
   */
-  
   var sheet = e.source.getActiveSheet();
 
   if (e.range.getColumn() != 5) {
