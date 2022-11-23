@@ -3,7 +3,8 @@
 *
 */
 this.clickBindHtmlIdTag("lectureHistory", init);		
-clickBindHtmlIdTag : function(tagId, actionFunction){
-		let tagIdEvent = document.getElementById(tagId);
-		tagIdEvent.addEventListener("click", actionFunction);
+
+const clickBindHtmlIdTag = (tagId, actionFunction) => {
+	let tagIdEvent = document.getElementById(tagId);
+	tagIdEvent.addEventListener("click", actionFunction);
 },
