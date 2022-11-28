@@ -14,9 +14,11 @@ const clickBindHtmlIdTag = (tagId, actionFunction) => {
 */
 const setValuesWithClassTag = (value, className) =>{
 	let classTags = document.getElementsByClassName(className);
-	for(var i = 0, max = classTags.length; i < max; i++) 
-	{
-		classTags[i].style.display = "none";
-		classTags[i].innerHTML = '';
+	if(classTags.length>0){
+		for(var i = 0, max = classTags.length; i < max; i++) 
+		{
+			//classTags[i].style.display = "none";
+			classTags[i].innerHTML = value;
+		}	
 	}	
 }
