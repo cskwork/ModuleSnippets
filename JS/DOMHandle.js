@@ -6,5 +6,5 @@ this.clickBindHtmlIdTag("lectureHistory", init);
 
 const clickBindHtmlIdTag = (tagId, actionFunction) => {
 	let tagIdEvent = document.getElementById(tagId);
-	tagIdEvent.addEventListener("click", actionFunction);
+	if(tagIdEvent) tagIdEvent.addEventListener("click", actionFunction);
 },
