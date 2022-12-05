@@ -1,14 +1,10 @@
-  /*
+// @목차
+// lineBreakBetweenLongText
+// numberOfItemsInArray
+// replaceAllInString
+// sortJSONStringByPriceAscending
 
-  목차
-    lineBreakBetweenLongText
-    numberOfItemsInArray
-    replaceAllInString
-    sortJSONStringByPriceAscending
-
-  */
-
-  //========================================================================  
+//========================================================================  
   /*
   INPUT
     a,b,c,d,e
