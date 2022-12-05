@@ -15,22 +15,10 @@
 		parameterType="com.package.restapi.domain.Entity"
 		resultType="com.package.restapi.domain.Entity">
 		SELECT
-		SUBJECT_YEAR,
-		SMSTR_CD,
-		DIVISION,
-		SUBJECT_NM,
-		SUBJECT_ID,
-		BOOK_TYPE,
-		BOOK_NM,
-		AUTHOR,
-		PUBLISHER
-		FROM SUBJECT_BOOK
+		SUBJECT_YEAR
+		FROM TABLENAME
 		WHERE SUBJECT_ID =
 		#{subject_id}
-		AND SUBJECT_YEAR =
-		#{subject_year}
-		AND SMSTR_CD =
-		#{smstr_cd}
 		AND DIVISION = #{division}
 		ORDER BY A.TFIDF DESC
 		<choose>
@@ -49,14 +37,10 @@
 		INSERT INTO TABLENAME
 		(
 		USER_ID,
-		ACTIVITY_CD,
-		TYPE,
-		DETAIL,
-		LOCATION,
+		ACTIVITY_CD
 		START_DATE,
 		END_DATE,
-		REG_DATE,
-		CHG_DATE
+		REG_DATE
 		)
 		VALUES
 		<foreach collection="multiList" index="index" item="item"
@@ -64,9 +48,6 @@
 			(
 			#{item.COLUMNNAME},
 			#{item.COLUMNNAME},
-			#{item.COLUMNNAME},
-			#{item.COLUMNNAME},
-			#{item.LOCATION},
 			<choose>
 				<when test="item.START_DATE != ''">
 					STR_TO_DATE(#{item.START_DATE}, '%Y-%m'),
@@ -83,7 +64,6 @@
 					NULL,
 				</when>
 			</choose>
-			now(),
 			now()
 			)
 		</foreach>
