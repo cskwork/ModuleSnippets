@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="template">
+	<delete id="deleteEntity" parameterType="java.util.Map">
+		DELETE FROM TABLENAME
+		WHERE 1=1
+		AND USER_ID = #{userId}
+		AND KEYWORD IN
+		<foreach collection="list" index="index" item="item" separator=",">
+			(#{item})
+		</foreach>
+	</delete>
+
+	<select id="getEntity"
+		parameterType="com.package.restapi.domain.Entity"
+		resultType="com.package.restapi.domain.Entity">
+		SELECT
+		SUBJECT_YEAR,
+		SMSTR_CD,
+		DIVISION,
+		SUBJECT_NM,
+		SUBJECT_ID,
+		BOOK_TYPE,
+		BOOK_NM,
+		AUTHOR,
+		PUBLISHER
+		FROM SUBJECT_BOOK
+		WHERE SUBJECT_ID =
+		#{subject_id}
+		AND SUBJECT_YEAR =
+		#{subject_year}
+		AND SMSTR_CD =
+		#{smstr_cd}
+		AND DIVISION = #{division}
+		ORDER BY A.TFIDF DESC
+		<choose>
+			<when
+				test="start != null and start != '' and pageSize != null and pageSize != ''">
+				LIMIT #{pageSize, jdbcType=INTEGER} OFFSET #{start,
+				jdbcType=INTEGER}
+			</when>
+			<otherwise>
+				LIMIT 100
+			</otherwise>
+		</choose>
+	</select>
+
+	<insert id="addEntity" parameterType="java.util.Map">
+		INSERT INTO TABLENAME
+		(
+		USER_ID,
+		ACTIVITY_CD,
+		TYPE,
+		DETAIL,
+		LOCATION,
+		START_DATE,
+		END_DATE,
+		REG_DATE,
+		CHG_DATE
+		)
+		VALUES
+		<foreach collection="multiList" index="index" item="item"
+			separator=",">
+			(
+			#{item.COLUMNNAME},
+			#{item.COLUMNNAME},
+			#{item.COLUMNNAME},
+			#{item.COLUMNNAME},
+			#{item.LOCATION},
+			<choose>
+				<when test="item.START_DATE != ''">
+					STR_TO_DATE(#{item.START_DATE}, '%Y-%m'),
+				</when>
+				<when test="item.START_DATE == ''">
+					NULL,
+				</when>
+			</choose>
+			<choose>
+				<when test="item.END_DATE != ''">
+					STR_TO_DATE(#{item.END_DATE}, '%Y-%m'),
+				</when>
+				<when test="item.END_DATE == ''">
+					NULL,
+				</when>
+			</choose>
+			now(),
+			now()
+			)
+		</foreach>
+	</insert>
+
+	<update id="updateEntity" parameterType="java.util.Map">
+		UPDATE TABLENAME
+		SET
+		COLUMNNAME = #{COLUMNNAME},
+		CHG_DATE= now()
+		WHERE COLUMNNAME = #{COLUMNNAME}
+	</update>
+</mapper>
