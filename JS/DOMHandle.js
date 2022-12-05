@@ -1,3 +1,7 @@
+// clickBindHtmlIdTag
+// setValuesWithClassTag
+
+// ==================================================================================
 /**
 * Make function and bind function to event with Tag ID
 *
@@ -8,6 +12,9 @@ const clickBindHtmlIdTag = (tagId, actionFunction) => {
 	let tagIdEvent = document.getElementById(tagId);
 	if(tagIdEvent) tagIdEvent.addEventListener("click", actionFunction);
 },
+      
+// ==================================================================================
+      
 /** 
 * setValuesWithClassTag
 * (Foreach X for compatibility)
