@@ -10,6 +10,11 @@
   - DateTimeConversion
     - convertLocalDateTimeToStringFormat
     - convertStringFormatToLocalDateTime
+  - Java-codeSnippets
+    - Make a custom stack
+    - Making a hashmap
+    - Memoization in Java
+    - Trie Data Structure
  
  ### JS
   - DOMHandle
@@ -30,6 +35,26 @@
     - numberOfItemsInArray
     - replaceAllInString
     - sortJSONStringByPriceAscending
+  - JS-codeSnippets
+    - Sorting an array
+    - Making API calls using the fetch() method
+    - Find the Maximum using a Conditional (ternary) Operator
+    - Creating a New Array using the Existing Array/List
+    - Creating a New Array after Filtering the Existing Array
+    - Find an Element based on Specific Conditions
+    - Find the Index of an Element based on Specific Conditions
+    - Sum of All Elements in an Array
+    - Remove the First Element from the Array
+    
 ### SQL
   - TemplateMapper
     - CRUD
+
+### C
+  - C-codeSnippets
+    - Get the length of an array 
+    - Print an array element in C using array size
+    - Difference between const int-, const int - const, and int const - in C
+    - Check two given integers whether either of them is in the range 100..200 inclusive.
+    - Check whether the sequence of numbers 1, 2, 3 appears in a given array of integers somewhere.
+  
