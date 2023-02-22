@@ -58,3 +58,19 @@
     - Check two given integers whether either of them is in the range 100..200 inclusive.
     - Check whether the sequence of numbers 1, 2, 3 appears in a given array of integers somewhere.
   
+----
+
+### Educational References
+
+Devops Exercise
+https://github.com/bregman-arie/devops-exercises
+
+Understanding Design Patterns
+https://github.com/DovAmir/awesome-design-patterns
+
+Project Based Learning
+https://github.com/practical-tutorials/project-based-learning
+
+In-Depth Knowledge
+https://github.com/jwasham/coding-interview-university#recursion
+
