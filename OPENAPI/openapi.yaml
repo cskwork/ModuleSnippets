@@ -1,8 +1,8 @@
 openapi: 3.0.3
 info:
-  title: 단국대학교 교육지원비서 - OpenAPI 3.0
+  title: 프로젝트 - OpenAPI 3.0
   description: |-
-    단국대학교 교육 지원비서 API 
+    프로젝트 API 
   #  - [The Pet Store repository](https://github.com/swagger-api/swagger-petstore)
   #  - [The source API definition for the Pet Store](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml)
   #termsOfService: http://swagger.io/terms/
