@@ -1,0 +1,118 @@
+
+# ===========================================
+# 데이터 이관시 FK 이슈는 해당 명령어 사용하기
+# sudo mysql --init-command="SET SESSION FOREIGN_KEY_CHECKS=0; " -u username -p username -f < FILE.sql
+# 데이터 차이 확인 및 SYNC
+# nohup sudo mysqldbcompare --server1=username:password@ip1:3306 --server2=username:password@ip2:3306 data:data --run-all-tests --changes-for=server1 --difftype=sql > sync.sql &
+# Check Config Error
+# mysqld --help 2>&1 | grep -ci error
+# ===========================================
+
+#
+# This group is read both by the client and the server
+# use it for options that affect everything
+#
+
+[mariadb]
+# CLIENT #
+port                           = 3306
+socket                         = /var/lib/mysql/mysql.sock
+
+# foreign_key_checks             = 0
+
+# MyISAM #
+key_buffer_size                = 32M
+myisam_recover_options         = FORCE,BACKUP
+
+# SAFETY #
+max_allowed_packet             = 200MB
+max_connect_errors             = 1000000
+wait_timeout = 28800
+lock_wait_timeout = 31536000
+max_connections = 500
+
+skip_name_resolve
+sql_mode                       = STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+sysdate_is_now                 = 1
+innodb                         = FORCE
+
+# DATA STORAGE #
+datadir                        = /var/lib/mysql/
+
+# BINARY LOGGING #
+log_bin                        = /var/log/mysql/mariadb-bin
+expire_logs_days               = 14
+sync_binlog                    = 1
+
+# CACHES AND LIMITS #
+tmp_table_size                 = 32M
+max_heap_table_size            = 32M
+query_cache_type               = 0
+query_cache_size               = 0
+max_connections                = 500
+thread_cache_size              = 50
+open_files_limit               = 5000
+table_definition_cache         = 4096
+table_open_cache               = 4096
+
+# INNODB #
+innodb_flush_method            = O_DIRECT
+innodb_log_files_in_group      = 2
+innodb_log_file_size           = 128M
+innodb_flush_log_at_trx_commit = 1
+innodb_file_format=barracuda
+innodb_file_per_table          = 1
+innodb_large_prefix = "ON"
+innodb_file_format=barracuda
+innodb_buffer_pool_size        = 8G
+
+# LOGGING #
+log_error                      = /var/log/mariadb/mariadb-error.log
+slow_query_log                 = 1
+slow_query_log_file            = /var/log/mariadb/mariadb-slow.log
+long_query_time                = 10
+log-queries-not-using-indexes
+
+# REPLICATION #
+server_id                      = 1
+log_bin                        = /var/log/mariadb/mariadb-bin
+log_slave_updates              = 1
+relay_log                      = /var/log/mariadb/mariadb-relay
+relay_log_recovery             = 1
+
+[client]
+default-character-set = utf8mb4
+
+[mysqld]
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+
+#inniodb_large_prefix = "ON"
+#innodb_file_format=barracuda
+#innodb_file_per_table=1
+# wait_timeout = 28800
+# lock_wait_timeout = 31536000
+# max_connections = 500
+# max_allowed_packet= 200M
+# transaction-isolation = READ-COMMITTED
+
+# [mysqld_safe]
+# log-error=/var/log/mariadb/mariadb.log
+# pid-file=/var/run/mariadb/mariadb.pid
+# log-bin=/var/log/mariadb/mariadb-bin.log
+
+# [mysqld]
+# server_id=1
+# log-basename=master1
+# binlog-format=mixed
+
+#
+# include all files from the config directory
+#
+!includedir /etc/my.cnf.d
+
+#
+# include *.cnf from the config directory
+#
+!includedir /etc/my.cnf.d
+
