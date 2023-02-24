@@ -2,8 +2,12 @@
 
 ### Bash
   - FolderManipulation
-    - COPY FOLDER STRUCTURE FROM SOURCE TO DESTINATION
-
+    - copy folder structure from source to destination path
+### SHELL
+  - deploy War With Backup
+  - send Sample Mail
+  - tail Spring Boot
+  
 ### Java
   - DataStructureManipulation
     -  Combine HashMap Lists
@@ -16,7 +20,7 @@
     - Memoization in Java
     - Trie Data Structure
  
- ### JS
+### JS
   - DOMHandle
     - clickBindHtmlIdTag
     - setValuesWithClassTag
@@ -57,6 +61,9 @@
     - Difference between const int-, const int - const, and int const - in C
     - Check two given integers whether either of them is in the range 100..200 inclusive.
     - Check whether the sequence of numbers 1, 2, 3 appears in a given array of integers somewhere.
+    
+### DB Config
+  - mariadbmycnfDefaultConfig.cnf
   
 ----
 
