@@ -39,6 +39,7 @@ function onEdit(e) {
 
 // Project Management
 // https://script.google.com/home/projects/1bPzMyvyhsYgVAy5BwcfVB9xDkAxIOu3OWfXztXksx_u6Z1enOyVwJG-E/edit
+
 /*
 Copyright (c) 2020, Evenbytes
 All rights reserved.
@@ -68,13 +69,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 //Version 2.02 Updated 15/OCT/2020
 
-var LogSheetName = "LOG";
+var LogSheetName = "로그";
 var MainTaskColumn = 3;
 var TaskIdentifierColumn = 4;
 var TaskDescriptionColumn = 5;
 var userColumn = 10;
 var userColumName;
-var StatusColumn = 13;
+var StatusColumn = 13; // 상태값 컬럼
 var CreatedDateColumn = 14;
 var CompletedDateColumn = 15;
 var LastUpdatedColumn = 16;
@@ -85,7 +86,7 @@ var NotificationTableRange = "A22:B30"
 var NotificationTableValues;
 
 var taskIdentifierColumnName;
-var ConfigSheetName = "Config";
+var ConfigSheetName = "설정";
 
 var TaskFolderIDRange = "B2";
 var TaskFolderID = "";
@@ -96,7 +97,7 @@ var ArchiveTaskAfter = "";
 var InitStatusRange = "B5";
 var InitStatus = "";
 var ProductBacklogNameRange = "B6";
-var ProductBacklogName = "";
+var ProductBacklogName = "백로그";
 var CompletedActionsRange = "B7";
 var CompletedActions = "";
 var LogActivatedRange = "B8";
@@ -252,9 +253,14 @@ function updateLastUpdateBy_(line){
 }
 
 function getPeopleToNotifyByStatus(status){  
-  for(var i = 0; i < NotificationTableValues.length; i++)
-    if (NotificationTableValues[i][0].toLowerCase() == status.toLowerCase())
-    return NotificationTableValues[i][1];   
+  for(var i = 0; i < NotificationTableValues.length; i++){
+    log(NotificationTableValues[i][0]);
+    log(status);
+     if (NotificationTableValues[i][0] && status && NotificationTableValues[i][0].toLowerCase() == status.toLowerCase()){
+        return NotificationTableValues[i][1];   
+     }
+  }
+  
 }
 
 function VerifyAndSendNotificationForStatus(status, lineIndex){  
@@ -263,8 +269,8 @@ function VerifyAndSendNotificationForStatus(status, lineIndex){
     if (getPeopleToNotifyByStatus(status).indexOf('@') > 0){
       loadEmailData(lineIndex);    
       var subject = SpreadsheetApp.getActiveSpreadsheet().getName() + " // " + emailData[taskIdentifierColumnName] + " // " + status;
-      var htmlContent = HtmlService.createTemplateFromFile(status).evaluate().getContent();  
-      GmailApp.sendEmail(getPeopleToNotifyByStatus(status), subject, '', {
+      var htmlContent = HtmlService.createTemplateFromFile('taskassigned').evaluate().getContent();  // status as template name 
+      MailApp.sendEmail(getPeopleToNotifyByStatus(status), subject, '', {
         htmlBody: htmlContent
       });    
       log("Notification sent, Task in status " + status + " notified to " + getPeopleToNotifyByStatus(status), "ACTION");
@@ -273,15 +279,18 @@ function VerifyAndSendNotificationForStatus(status, lineIndex){
   }
   catch(e){
     log("Error trying to send the notification for the line " + lineIndex + " With the status " + status + ". Details: " + e.toString(), "ERROR");
+    log("getPeopleToNotifyByStatus"+ getPeopleToNotifyByStatus(status));
+    log("subject"+subject);
+    log("htmlContent"+htmlContent);
   }
 }
 
 function SendTaskAssigned(lineIndex){   
   loadEmailData(lineIndex);  
-  var subject = SpreadsheetApp.getActiveSpreadsheet().getName() + " // New Task for you: " + emailData[taskIdentifierColumnName];
+  var subject = SpreadsheetApp.getActiveSpreadsheet().getName() + " // 신규 임무: " + emailData[taskIdentifierColumnName];
   var htmlContent = HtmlService.createTemplateFromFile('taskassigned').evaluate().getContent();  
   if(emailData[userColumName]){
-    GmailApp.sendEmail(emailData[userColumName], subject, '', {
+    MailApp.sendEmail(emailData[userColumName], subject, '', {
       htmlBody: htmlContent
     });
     log("Notification sent, Task assigned to " + emailData[userColumName], "ACTION");
@@ -292,8 +301,11 @@ function loadEmailData(lineIndex){
   emailData = {};
   var headerRow = SpreadsheetApp.getActiveSheet().getRange(1, 1, 1, NumberOfColumns).getValues();
   var dataRow = SpreadsheetApp.getActiveSheet().getRange(lineIndex, 1, 1, NumberOfColumns).getValues();  
-  for (var i= 0; i <= headerRow[0].length; i++)    
-    emailData[headerRow[0][i]] = dataRow[0][i];
+  for (var i= 0; i <= headerRow[0].length; i++) {
+        log(emailData[headerRow[0][i]]);
+        emailData[headerRow[0][i]] = dataRow[0][i];
+  }   
+  
   
   emailData["docLink"] = SpreadsheetApp.getActiveSpreadsheet().getUrl();
   emailData["docName"] = SpreadsheetApp.getActiveSpreadsheet().getName();  
@@ -303,7 +315,7 @@ function getUserEmail() {
   var userEmail = PropertiesService.getUserProperties().getProperty("userEmail");
   if(!userEmail) {   
     var ui = SpreadsheetApp.getUi();
-    var response = ui.prompt("Please enter your email");
+    var response = ui.prompt("이메일 주소를 입력하세요");
     PropertiesService.getUserProperties().setProperty("userEmail",response.getResponseText());
     log("First Login by " + response.getResponseText(), "ACTION");
   }
@@ -336,7 +348,7 @@ function installGAS_(){
   
   var email = getUserEmail();
   var ss = SpreadsheetApp.getActive();
-  ScriptApp.newTrigger('ExecuteBackgroundTasks').timeBased().everyMinutes(15).create();
+  ScriptApp.newTrigger('ExecuteBackgroundTasks').timeBased().everyMinutes(15).create(); // RUN EVERY 15 MIN
   var documentProperties = PropertiesService.getDocumentProperties();
   documentProperties.setProperty("STATUSNAME", "true");
   documentProperties.setProperty("INSTALLEDUSERNAME", email);
@@ -418,7 +430,3 @@ function reviewActionsforAllLines(){
     }   
   }   
 }
-
-////////////////////////////////////////////////////////////
-// Developed by Evenbytes 2020
-///////////////////////////////////////////////////////////
