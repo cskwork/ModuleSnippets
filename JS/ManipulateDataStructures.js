@@ -1,10 +1,20 @@
 // @목차
+
 // 배열의 고유값
+
 // 첫번째와 마지막 위치를 기준으로 누적된 합을 이동하면서 비교하는 방법
+
 // 두번째 배열 값들이 첫번째 배열값 X2 인지 확인 
+
 // Anagram인지 확인
+
 // 배열값 찾기 (binary search)
+
 // JSON LIST 객체 고유 키값 조회
+
+// Cherry-pick keys while using JSON.stringify
+
+// Replacer function to limit output
 //=======================================================================================
 
 // JSON LIST 객체 고유 키값 조회
@@ -165,12 +175,9 @@ function validAnagram(first, second){
 	return true;
   //--------------------------------
 }
-
 console.log(validAnagram('anagram','nagaram'));
 console.log(validAnagram('anagram','nagparam'));
-
 //=======================================================================================
-
 // 배열값 찾기 (binary search)
 function searchB(array, val){
 	let min=0; //Init left
@@ -191,7 +198,51 @@ function searchB(array, val){
 	return -1;
 
 }
-
-
 console.log(searchB([1,2,3,4,5,6], 8));
 console.log(searchB([1,2,3,4,8,6], 8));
+//=======================================================================================
+// Cherry-pick keys while using JSON.stringify
+const user = {
+  id: 1337,
+  name: 'Paul Knulst',
+  role: 'Senior Engineer',
+  company: 'Realcore',
+  page: 'https://www.paulsblog.dev',
+  github: 'https://www.github.com/paulknulst',
+};
+
+JSON.stringify(user, ['name', 'role', 'page']);
+
+// returns
+// {
+//   "name": "Paul Knulst",
+//   "role": "Senior Engineer",
+//   "page": "https://www.paulsblog.dev"
+// }
+//=======================================================================================
+// Replacer function to limit output
+function replacer(key, value) {
+  if (typeof value === 'string' && key !== 'name' && key !== 'page') {
+      return undefined;
+  }
+  return value;
+}
+
+const userObject = {
+  id: 1337,
+  name: 'Paul Knulst',
+  role: 'Senior Engineer',
+  company: 'Realcore',
+  page: 'https://www.paulsblog.dev',
+  github: 'https://www.github.com/paulknulst',
+};
+
+JSON.stringify(userObject, replacer);
+
+// returns
+// {
+//   "id": 1337
+//   "name": "Paul Knulst",
+//   "page": "https://www.paulsblog.dev"
+// }
+//=======================================================================================
